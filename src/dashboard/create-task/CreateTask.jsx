@@ -4,8 +4,16 @@ import { useForm } from 'react-hook-form';
 const CreateTask = () => {
   const axios = useAxios();
   const { register, handleSubmit } = useForm();
-  const onSubmit = data => console.log(data);
-  axios.post('todo-lists');
+  const onSubmit = data => {
+    console.log(data);
+    const newTask = { ...data, status: 'Incomplete' };
+    axios.post('/todo-lists', newTask).then(res => {
+      console.log(res.data);
+      if (res.data.insertedId) {
+        alert('Task added successfully');
+      }
+    });
+  };
   return (
     <div>
       <DashboardTitle title="Create Task"></DashboardTitle>
@@ -52,11 +60,6 @@ const CreateTask = () => {
               className="input input-bordered"
               required
             />
-            {/* <DatePicker
-                name="date"
-                selected={selectedDate}
-                onChange={date => setSelectedDate(date)}
-              /> */}
           </div>
 
           <div className="form-control w-2/4">
@@ -72,9 +75,9 @@ const CreateTask = () => {
               <option disabled selected>
                 Choose Priority Level
               </option>
-              <option>High Priority</option>
-              <option>Medium Priority</option>
-              <option>Low Priority</option>
+              <option>High</option>
+              <option>Medium</option>
+              <option>Low</option>
               <option>No Priority</option>
             </select>
           </div>
