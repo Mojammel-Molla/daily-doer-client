@@ -1,15 +1,9 @@
+import BannerImg from '../../assets/Banner-BG.png';
 const Banner = () => {
   return (
-    <div
-      className="hero min-h-[80vh]"
-      style={{
-        backgroundImage:
-          'url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg)',
-      }}
-    >
-      <div className="hero-overlay bg-opacity-60"></div>
-      <div className="hero-content text-center text-neutral-content">
-        <div className="md:max-w-4xl ">
+    <div className="hero min-h-[73vh] bg-gradient-to-r from-[#0073f0] via-purple-500 to-[#62238c]">
+      <div className="hero-content w-full flex-col lg:flex-row lg:justify-between">
+        <div className="text-white">
           <h1 className="mb-5 lg:text-4xl font-bold">
             Your Ultimate Task Management Companion
           </h1>
@@ -21,8 +15,14 @@ const Banner = () => {
             day a success. Start your journey to a more productive you with
             DailyDoer!
           </p>
-          <button className="btn btn-primary">Explore more</button>
+          <button className="btn text-white bg-[#ee9949] hover:bg-[#62238c]">
+            Explore more
+          </button>
         </div>
+        <img
+          src={BannerImg}
+          className="lg:max-w-3xl min-h-[50vh] rounded-lg "
+        />
       </div>
     </div>
   );

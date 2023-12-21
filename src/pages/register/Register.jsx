@@ -1,6 +1,19 @@
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { useContext } from 'react';
+import { AuthContext } from '../../providers/AuthProvider';
 const Register = () => {
+  const navigate = useNavigate();
+  const { createUser } = useContext(AuthContext);
+  const { register, handleSubmit } = useForm();
+  const onSubmit = data => {
+    createUser(data.email, data.password)
+      .then(res => {
+        navigate('/');
+        console.log(res.user);
+      })
+      .catch(err => console.log(err));
+  };
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -13,31 +26,59 @@ const Register = () => {
           </p>
         </div>
         <div className="card shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
-          <form className="card-body">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text">Name:</span>
               </label>
               <input
-                type="email"
-                placeholder="email"
+                {...register('name')}
+                type="text"
+                placeholder="Name"
                 className="input input-bordered"
                 required
               />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text">Photo:</span>
               </label>
               <input
+                {...register('photo')}
+                type="text"
+                placeholder="Photo"
+                className="input input-bordered"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email:</span>
+              </label>
+              <input
+                {...register('email')}
+                type="email"
+                placeholder="Email"
+                className="input input-bordered"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Password:</span>
+              </label>
+              <input
+                {...register('password')}
                 type="password"
-                placeholder="password"
+                placeholder="Password"
                 className="input input-bordered"
                 required
               />
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Register</button>
+              <button type="submit" className="btn btn-primary">
+                Register
+              </button>
             </div>
             <p className=" ">
               Already Have an Account? Please{' '}

@@ -1,6 +1,19 @@
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { useContext } from 'react';
+import { AuthContext } from './../../providers/AuthProvider';
 const LogIn = () => {
+  const navigate = useNavigate();
+  const { logInUser } = useContext(AuthContext);
+  const { register, handleSubmit } = useForm();
+  const onSubmit = data => {
+    logInUser(data.email, data.password)
+      .then(res => {
+        console.log(res.user);
+        navigate('/');
+      })
+      .catch(err => console.log(err));
+  };
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -13,12 +26,13 @@ const LogIn = () => {
           </p>
         </div>
         <div className="card shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
-          <form className="card-body">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
+                {...register('email')}
                 type="email"
                 placeholder="email"
                 className="input input-bordered"
@@ -30,6 +44,7 @@ const LogIn = () => {
                 <span className="label-text">Password</span>
               </label>
               <input
+                {...register('password')}
                 type="password"
                 placeholder="password"
                 className="input input-bordered"
@@ -37,7 +52,9 @@ const LogIn = () => {
               />
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <button type="submit" className="btn btn-primary">
+                Login
+              </button>
             </div>
             <p className=" ">
               Don't Have an Account? Please{' '}
