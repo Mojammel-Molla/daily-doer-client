@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import DashboardTitle from '../../shared/DashboardTitle';
 import TodoTitle from '../../shared/TodoTitle';
 import useAxios from './../../hooks/useAxios';
-
+import toast, { Toaster } from 'react-hot-toast';
 const TodoList = () => {
   const [listItems, setListItems] = useState([]);
   const axios = useAxios();
@@ -16,6 +16,16 @@ const TodoList = () => {
   );
   const ongoingItems = listItems?.filter(item => item.status == 'Ongoing');
   const completedItems = listItems?.filter(item => item.status == 'Complete');
+
+  const handleTaskDelete = _id => {
+    axios.delete(`todo-lists/${_id}`).then(res => {
+      console.log(res.data);
+      if (res.data.deletedCount > 0) {
+        toast('Your task has been deleted');
+      }
+    });
+  };
+
   return (
     <>
       <DashboardTitle title="Todo Items">:{listItems.length}</DashboardTitle>
@@ -43,7 +53,12 @@ const TodoList = () => {
                         <span className="font-medium">{item.priority}</span>
                       </p>
                     </div>
-                    <button className="btn">Delete</button>
+                    <button
+                      onClick={() => handleTaskDelete(item._id)}
+                      className="btn"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>
@@ -72,7 +87,12 @@ const TodoList = () => {
                         <span className="font-medium">{item.priority}</span>
                       </p>
                     </div>
-                    <button className="btn">Delete</button>
+                    <button
+                      onClick={() => handleTaskDelete(item._id)}
+                      className="btn"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>
@@ -106,13 +126,19 @@ const TodoList = () => {
                         <span className="font-medium">{item.priority}</span>
                       </p>
                     </div>
-                    <button className="btn">Delete</button>
+                    <button
+                      onClick={() => handleTaskDelete(item._id)}
+                      className="btn"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+        <Toaster />
       </div>
     </>
   );

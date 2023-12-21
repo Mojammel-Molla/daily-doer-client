@@ -1,6 +1,7 @@
 import useAxios from '../../hooks/useAxios';
 import DashboardTitle from '../../shared/DashboardTitle';
 import { useForm } from 'react-hook-form';
+import toast, { Toaster } from 'react-hot-toast';
 const CreateTask = () => {
   const axios = useAxios();
   const { register, handleSubmit } = useForm();
@@ -10,7 +11,7 @@ const CreateTask = () => {
     axios.post('/todo-lists', newTask).then(res => {
       console.log(res.data);
       if (res.data.insertedId) {
-        alert('Task added successfully');
+        toast('Task added successfully');
       }
     });
   };
@@ -92,6 +93,7 @@ const CreateTask = () => {
           </button>
         </div>
       </form>
+      <Toaster />
     </div>
   );
 };
