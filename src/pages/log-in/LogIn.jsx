@@ -2,12 +2,30 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useContext } from 'react';
 import { AuthContext } from './../../providers/AuthProvider';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa6';
 const LogIn = () => {
   const navigate = useNavigate();
-  const { logInUser } = useContext(AuthContext);
+  const { logInUser, googleLogIn, githubLogIn } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const onSubmit = data => {
     logInUser(data.email, data.password)
+      .then(res => {
+        console.log(res.user);
+        navigate('/');
+      })
+      .catch(err => console.log(err));
+  };
+  const handleGoogleLogin = () => {
+    googleLogIn()
+      .then(res => {
+        console.log(res.user);
+        navigate('/');
+      })
+      .catch(err => console.log(err));
+  };
+  const handleGithubLogin = () => {
+    githubLogIn()
       .then(res => {
         console.log(res.user);
         navigate('/');
@@ -54,6 +72,16 @@ const LogIn = () => {
             <div className="form-control mt-6">
               <button type="submit" className="btn btn-primary">
                 Login
+              </button>
+            </div>
+            <div className="flex justify-around">
+              <button onClick={handleGoogleLogin} className="btn">
+                <FcGoogle />
+                Google
+              </button>
+              <button onClick={handleGithubLogin} className="btn">
+                <FaGithub />
+                GitHub
               </button>
             </div>
             <p className=" ">

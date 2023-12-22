@@ -6,6 +6,7 @@ import Register from '../pages/register/Register';
 import DashboardLayOut from '../layouts/DashboardLayOut';
 import CreateTask from '../dashboard/create-task/CreateTask';
 import TodoList from '../dashboard/todo-list/TodoList';
+import PrivateRoute from './PrivateRoute';
 
 const Routes = createBrowserRouter([
   {
@@ -28,15 +29,27 @@ const Routes = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <DashboardLayOut />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayOut />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: 'create-task',
-        element: <CreateTask />,
+        element: (
+          <PrivateRoute>
+            <CreateTask />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'todo-list',
-        element: <TodoList />,
+        element: (
+          <PrivateRoute>
+            <TodoList />
+          </PrivateRoute>
+        ),
       },
     ],
   },

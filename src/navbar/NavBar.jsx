@@ -6,22 +6,33 @@ const NavBar = () => {
   const { user, logOutUser } = useContext(AuthContext);
   const navLinks = (
     <>
-      <li className="mr-3">
-        <NavLink>Home</NavLink>
-      </li>
-      <li className="mr-3">
-        <NavLink>To Do</NavLink>
-      </li>
-      <li className="mr-3">
-        <NavLink to="/dashboard">Dashboard</NavLink>
-      </li>
+      <NavLink
+        className={({ isActive }) => (isActive ? 'text-black underline' : '')}
+        to="/"
+      >
+        <li className="font-medium mr-3">Home</li>
+      </NavLink>
+
+      <NavLink
+        className={({ isActive }) => (isActive ? 'text-black underline' : '')}
+        to=""
+      >
+        <li className="font-medium mr-3">To Do</li>
+      </NavLink>
+
+      <NavLink
+        className={({ isActive }) => (isActive ? 'text-white underline' : '')}
+        to="/dashboard"
+      >
+        <li className="mr-3 font-medium">Dashboard</li>
+      </NavLink>
     </>
   );
   const handleLogOut = () => {
     logOutUser();
   };
   return (
-    <div className="navbar bg-base-100 border-b-2">
+    <div className="navbar text-white bg-gradient-to-r from-[#0073f0] via-purple-500 to-[#62238c] border-b-2 px-5">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -47,18 +58,24 @@ const NavBar = () => {
             {navLinks}
           </ul>
         </div>
-        <a className="  text-xl">
+        <a className=" font-bold text-2xl">
           Daily <span>Doer</span>
         </a>
       </div>
       <div className="navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         {user ? (
-          <button onClick={handleLogOut} className="btn">
+          <button
+            onClick={handleLogOut}
+            className="btn  text-white bg-[#ee9949] hover:bg-[#62238c]"
+          >
             Log Out
           </button>
         ) : (
-          <Link to="/login" className="btn">
+          <Link
+            to="/login"
+            className="btn  text-white bg-[#ee9949] hover:bg-[#62238c]"
+          >
             Log In
           </Link>
         )}
